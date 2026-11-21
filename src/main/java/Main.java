@@ -5,8 +5,6 @@ import zero.Key;
 import zero.Sound;
 import zero.SpriteAnimation;
 
-
-
 public class Main extends GameApp {
     private SpriteAnimation petAnimation;
     private Sound chime;
@@ -36,7 +34,6 @@ public class Main extends GameApp {
             chime.play();
         }
     }
-
 
     @Override public void draw() {
         background(Color.rgb(240, 248, 255));
