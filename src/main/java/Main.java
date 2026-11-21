@@ -6,9 +6,8 @@ import zero.Sound;
 import zero.SpriteAnimation;
 
 public class Main extends GameApp {
-    private SpriteAnimation petAnimation;
+    private Pet pet;
     private Sound chime;
-    private double x = 280;
 
     @Override public void settings() { size(640, 400); }
     @Override public void setup() {
@@ -19,16 +18,16 @@ public class Main extends GameApp {
             imageRegion(sheet, 0, 531, 701, 561),
             imageRegion(sheet, 701, 531, 701, 561)
         };
-        petAnimation = new SpriteAnimation(8, frames);
+        pet = new Pet(new SpriteAnimation(8, frames));
         chime = loadSound("/pet/chime.wav");
         chime.setVolume(0.25);
     }
 
     @Override public void update(double seconds) {
-        if (keyDown(Key.LEFT)) x -= 160 * seconds;
-        if (keyDown(Key.RIGHT)) x += 160 * seconds;
-        x = Math.max(0, Math.min(x, width() - 80));
-        petAnimation.update(seconds);
+        int direction = 0;
+        if (keyDown(Key.LEFT)) direction--;
+        if (keyDown(Key.RIGHT)) direction++;
+        pet.update(direction, seconds, width());
         if (keyPressed(Key.SPACE)) {
             chime.stop();
             chime.play();
@@ -40,7 +39,7 @@ public class Main extends GameApp {
         fill(Color.rgb(47, 79, 79));
         textSize(20);
         text("Click the canvas; arrows move, Space chimes.", 20, 30);
-        image(petAnimation, x, 150, 80, 64);
+        pet.draw(this);
     }
 
     public static void main(String[] args) { launch(args); }
